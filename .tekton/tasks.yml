@@ -12,3 +12,21 @@ spec:
         rm -rf /workspace/*
         echo "✅ Cleanup done!"
 
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: nose-test-task
+spec:
+  steps:
+    - name: run-nose-tests
+      image: python:3.8-slim
+      workingDir: /workspace/source
+      script: |
+        #!/bin/sh
+        echo "🧪 Installing dependencies..."
+        pip install --upgrade pip
+        pip install nose
+        echo "🚀 Running unit tests with nose..."
+        nosetests
+
